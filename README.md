@@ -6,6 +6,9 @@ As a result the user will reach his/her fitness goals quicker when they track th
 
 ## Description:
 
+![log](img/log.jpg)
+![stats](img/stats.jpg)
+
 ## Installation: 
 
 This assignment will require you to create Mongo database with a Mongoose schema and handle routes with Express.
