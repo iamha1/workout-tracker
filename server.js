@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://workout-tracker-march2020:password1@ds255308.mlab.com:55308/heroku_gth9scw4", { useNewUrlParser: true });
 
 // Routes here
 app.get("/", (req,res) => {
@@ -51,18 +51,26 @@ db.Workout.create({})
   });
 });
 
-app.put("/api/workouts/:id", ({body, params}, res) => {
-    db.Workout.findByIdAndUpdate(
-        params.id,
-        { $push: { exercises: body } },
-        { new: true, runValidators: true }
-        )
-        .then(dbWorkout => {
-            res.json(dbWorkout);
-          })
-          .catch(err => {
-            res.json(err);
-          });    
+// app.put("/api/workouts/:id", ({body, params}, res) => {
+//     db.Workout.findByIdAndUpdate(
+//         params.id,
+//         { $push: { exercises: body } },
+//         { new: true, runValidators: true }
+//         )
+//         .then(dbWorkout => {
+//             res.json(dbWorkout);
+//           })
+//           .catch(err => {
+//             res.json(err);
+//           });    
+// });
+
+app.put("/api/workouts/:id", (req, res) => {
+    db.Workout.findOneAndUpdate({ _id: mongoose.Types.ObjectId(req.params.id) }, { $set: { exercises: req.body } }, function (err, data) {
+        if (err)
+            throw err;
+        res.send(data)
+    });
 });
 
 app.get("/api/workouts/range", ({query}, res) => {
@@ -74,24 +82,6 @@ db.Workout.find({})
     res.json(err);
 });
 });
-
-// app.delete("/api/workouts", ({ body }, res) => {
-//     db.Workout.findByIdAndDelete(body.id)
-//       .then(() => {
-//         res.json(true);
-//       })
-//       .catch(err => {
-//         res.json(err);
-//       });
-//   });
-
-
-// app.get("/exercise/:lastWorkout", (req,res) => 
-// { console.log(req.params.lastWorkout);
-    
-// })
-        
-
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);

@@ -1,7 +1,7 @@
 let mongoose = require("mongoose");
 let db = require("../models");
 
-mongoose.connect("mongodb://localhost/workout", {
+mongoose.connect("mongodb://workout-tracker-march2020:password1@ds255308.mlab.com:55308/heroku_gth9scw4", {
   useNewUrlParser: true,
   useFindAndModify: false
 });
@@ -126,8 +126,8 @@ let workoutSeed = [
     day: new Date().setDate(new Date().getDate()-1),
     exercises: [
       {
-        type: "resistance",
-        name: "Bench",
+        type: "cardio",
+        name: "sprint",
         duration: 30,
         distance: 2
       }
