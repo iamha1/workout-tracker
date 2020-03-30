@@ -51,37 +51,19 @@ app.post("/api/workouts", (req, res) => {
         });
 });
 
-app.put("/api/workouts/:id", ({body, params}, res) => {
+app.put("/api/workouts/:id", ({ body, params }, res) => {
     db.Workout.findByIdAndUpdate(
         params.id,
         { $push: { exercises: body } },
         { new: true, runValidators: true }
-        )
+    )
         .then(dbWorkout => {
             res.json(dbWorkout);
-          })
-          .catch(err => {
+        })
+        .catch(err => {
             res.json(err);
-          });    
+        });
 });
-
-// app.put("/api/workouts/:id", (req, res) => {
-//     db.Workout.findOneAndUpdate({ _id: mongoose.Types.ObjectId(req.params.id) }, { $set: { exercises: req.body } }, function (err, data) {
-//         if (err)
-//             throw err;
-//         res.send(data)
-//     });
-// });
-
-// app.put("/api/workouts/:id", function (req, res) {
-//     db.Workout.findByIdAndUpdate(req.params.id, {$push: {exercises: req.body}}) 
-//         .then(dbWorkout => {
-//             res.json(dbWorkout);
-//         })
-//         .catch(err => {
-//             res.json(err);
-//         });
-// });
 
 app.get("/api/workouts/range", ({ query }, res) => {
     db.Workout.find({})
