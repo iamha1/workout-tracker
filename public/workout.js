@@ -4,8 +4,8 @@ async function initWorkout() {
   if (lastWorkout) {
     document
       .querySelector("a[href='/exercise?']")
-      .setAttribute("href", `/exercise/${lastWorkout._id}`);
-      
+      .setAttribute("href", `/exercise?id=${lastWorkout._id}`);
+
 
     const workoutSummary = {
       date: formatDate(lastWorkout.day),
